@@ -1,16 +1,11 @@
-import {
-    faArrowRight,
-    faCross,
-    faRupeeSign,
-    faTimes,
-} from "@fortawesome/free-solid-svg-icons";
+import { faRupeeSign } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { PageWrapper } from "../../animations";
 import { getCartItems } from "../../features/cart";
 import styled from "styled-components";
+import CartItem from "./CartItem";
 
 export const Cart = () => {
     const items = useSelector(getCartItems());
@@ -77,17 +72,16 @@ export const Cart = () => {
         setPrice(totalPrice);
     }, [items]);
 
+    if (price === 0) {
+        return <div>Empty cart...</div>;
+    }
+
     return (
         <>
             <CartStyle>
-                {items.map((item) => {
-                    return (
-                        <li className="item" key={item.id}>
-                            {item.title} <FontAwesomeIcon icon={faArrowRight} />{" "}
-                            {item.count} items.
-                        </li>
-                    );
-                })}
+                {items.map((item) => (
+                    <CartItem key={item.id} {...item}></CartItem>
+                ))}
                 <div className="price">
                     Price : <FontAwesomeIcon icon={faRupeeSign} />
                     {String(price).substring(0, 7)}

@@ -30,7 +30,9 @@ export const cart = createSlice({
         remove_cart: (state, action) => {
             const s = JSON.parse(JSON.stringify(state));
             action.payload.ids.forEach((id) => {
-                if (s.ids[id].count == 0) {
+                if (s.ids[id].count == 1) {
+                    s.count--;
+                    delete s.ids[id];
                     return;
                 }
                 s.ids[id].count--;
@@ -41,4 +43,4 @@ export const cart = createSlice({
     },
 });
 
-export const { add_cart, get_cart } = cart.actions;
+export const { add_cart, get_cart, remove_cart } = cart.actions;

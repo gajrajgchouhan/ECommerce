@@ -6,6 +6,20 @@ export const GlobalStyles = createGlobalStyle`
         padding:0;
         box-sizing: border-box;
     }
+    ::-webkit-scrollbar {
+        width: 12px;
+        overflow: hidden;
+    }
+    ::-webkit-scrollbar-track {
+        background: white;
+        border-radius: 5px;
+        overflow: hidden;
+    }
+    ::-webkit-scrollbar-thumb {
+        background: black;
+        border-radius: 5px;
+        overflow: hidden;
+    }
     body{
         font-family: 'Poppins', sans-serif;
         width: 100%;
