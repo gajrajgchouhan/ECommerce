@@ -1,8 +1,8 @@
-import { faStar as faStarSolid } from "@fortawesome/free-solid-svg-icons";
 import {
-    faStar as faStarRegular,
+    faStar as faStarSolid,
     faStarHalf,
-} from "@fortawesome/free-regular-svg-icons";
+} from "@fortawesome/free-solid-svg-icons";
+import { faStar as faStarRegular } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import _ from "lodash";
@@ -29,16 +29,15 @@ export const Stars = ({ rate, count }) => {
                         icon={faStarSolid}
                     />
                 ))}
-                {half ? (
-                    <>
+                {half && (
+                    <span className="halfStar" key={totalStars}>
+                        <FontAwesomeIcon className="star" icon={faStarHalf} />
                         <FontAwesomeIcon
                             key={totalStars}
                             className="star"
-                            icon={faStarHalf}
+                            icon={faStarRegular}
                         />
-                    </>
-                ) : (
-                    ""
+                    </span>
                 )}
                 {_.times(remainingStars, (i) => (
                     <FontAwesomeIcon
@@ -57,9 +56,21 @@ export const StarsStyle = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
+    position: relative;
     width: 100%;
     .star-icon,
     .count {
         margin: 3px;
+    }
+    .halfStar {
+        display: inline-grid;
+        grid-template: 1fr / 1fr;
+        grid-template-areas: "overlap";
+        vertical-align: middle;
+        transform: translateY(-2px);
+        .star {
+            grid-column: 1 / 1;
+            grid-row: 1 / 1;
+        }
     }
 `;

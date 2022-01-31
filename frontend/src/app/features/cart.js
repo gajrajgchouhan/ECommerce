@@ -1,5 +1,5 @@
 import { createSelector } from "reselect";
-import { add_cart, remove_cart } from "../app/cart";
+import { add_cart, remove_cart } from "../cart";
 
 export const addToCart = (id) => (dispatch) => {
     dispatch(add_cart({ ids: [id] }));

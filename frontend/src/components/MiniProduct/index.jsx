@@ -5,9 +5,9 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { Stars } from "../Stars";
-import { addToCart } from "../../features/cart";
+import { addToCart } from "../../app/features/cart";
 import { useSelector } from "react-redux";
-import { getProduct } from "../../features/product";
+import { getProduct } from "../../app/features/product";
 
 export const Product = ({ id }) => {
     const nav = useNavigate();

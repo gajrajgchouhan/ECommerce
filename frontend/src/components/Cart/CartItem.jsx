@@ -1,7 +1,7 @@
 import { faRupeeSign } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
-import { addToCart, removeFromCart } from "../../features/cart";
+import { addToCart, removeFromCart } from "../../app/features/cart";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
 

@@ -1,10 +1,10 @@
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { selectCurrentUser } from "../../app/auth/auth.selectors";
 import { useSelector, useDispatch } from "react-redux";
 import { signInSuccess, signOutSuccess } from "../../app/auth/auth.actions";
-import { auth, googleProvider } from "../../firebase/config";
+import { auth, googleProvider } from "../../app/firebase/config";
 import { signInWithPopup, signOut } from "@firebase/auth";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -14,6 +14,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
+import { addToSearch } from "../../app/features/search";
 
 const Nav = ({ cartItems }) => {
     const currentUser = useSelector(selectCurrentUser);
@@ -21,10 +22,10 @@ const Nav = ({ cartItems }) => {
     const infoRef = useRef();
     const loc = useLocation();
     const [icon, setIcon] = useState("bars");
+    const products = useSelector((state) => state.products);
+    const nav = useNavigate();
 
-    useEffect(() => {
-        infoRef.current.classList.remove("show");
-    }, [loc]);
+    useEffect(() => infoRef.current.classList.remove("show"), [loc]);
 
     const signInGoogle = async () => {
         try {
@@ -49,6 +50,25 @@ const Nav = ({ cartItems }) => {
             alert(error);
         }
     };
+
+    const [search, setSearch] = useState("");
+    const searchChangeHandler = (e) => setSearch(e.target.value);
+    const searchSubmitHandler = (e) => {
+        if (e.code !== "Enter") return;
+
+        let search_ids = [];
+        products.forEach(({ title, id }) => {
+            if (title.toLowerCase().includes(search.toLowerCase())) {
+                search_ids.push(id);
+            }
+        });
+        console.log("searchSubmit");
+        dispatch(addToSearch(search_ids));
+        setSearch("");
+        nav("/", { replace: true, state: { search: "true" } });
+    };
+
+    // useEffect(() => console.log(search), [search]);
 
     return (
         <NavStyle>
@@ -75,7 +95,13 @@ const Nav = ({ cartItems }) => {
             </Bars>
             <InfoStyle ref={infoRef}>
                 <Search className="col">
-                    <input type="text" placeholder="Search"></input>
+                    <input
+                        type="text"
+                        value={search}
+                        onChange={searchChangeHandler}
+                        onKeyDown={searchSubmitHandler}
+                        placeholder="Search"
+                    ></input>
                 </Search>
                 {currentUser === null ? (
                     <Button onClick={signInGoogle} className="col">

@@ -2,17 +2,25 @@ import { useSelector } from "react-redux";
 import styled from "styled-components";
 import { Product } from "../MiniProduct/index";
 import { PageWrapper } from "../../animations";
+import { useLocation } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { getProductsbySearch } from "../../app/features/search";
 
 const Products = () => {
-    const products = useSelector((state) => {
-        return state.products;
-    });
+    const location = useLocation();
+    const [search, setSearch] = useState(false);
+
+    useEffect(() => setSearch(location.state?.search || false), [location.key]);
+    useEffect(() => console.log("search", search), [search]);
+
+    const products = useSelector((state) => state.products);
+    const searchResult = useSelector(getProductsbySearch());
 
     return (
         <>
             <PageWrapper>
                 <ProductsStyle>
-                    {products.map((p) => {
+                    {(search.length > 0 ? searchResult : products).map((p) => {
                         return <Product id={p.id} key={p.id} />;
                     })}
                 </ProductsStyle>

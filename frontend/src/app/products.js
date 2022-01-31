@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchProducts } from "../features/api";
+import { fetchProducts } from "./features/api";
 
 export const products = createSlice({
     name: "products",

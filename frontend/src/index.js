@@ -6,7 +6,9 @@ import { Provider } from "react-redux";
 import { GlobalStyles } from "./styles";
 import { PersistGate } from "redux-persist/integration/react";
 import { BrowserRouter } from "react-router-dom";
-import { fetchProducts } from "./features/api";
+import { fetchProducts } from "./app/features/api";
+
+// 1. Change quantity in cart ; 2. Styled scroll bar
 
 store.dispatch(fetchProducts());
 

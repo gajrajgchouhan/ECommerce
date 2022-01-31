@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { getCartItems } from "../../features/cart";
+import { getCartItems } from "../../app/features/cart";
 import styled from "styled-components";
 import CartItem from "./CartItem";
 
